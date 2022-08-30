@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
+import { useTodosContext } from '../hooks/useTodosContext';
 import TodoDetails from './TodoDetails';
 import TodoForm from './TodoForm';
 
 
 
 function Home() {
-    const [todos, setTodos] = useState(null);
+    const {todos, dispatch} = useTodosContext()
 
 
     useEffect(() => {
@@ -14,20 +15,25 @@ function Home() {
         const json = await response.json()
 
         if (response.ok) {
-            setTodos(json)
+            dispatch({type:'SET_TODOS', payload: json})
         }
       }
       
       fetchTodos()
-    }, [])
+    }, [dispatch])
     
   return (
-    <div className="home border">
-      <TodoForm/>
-      <div className="todos">
-        {todos && todos.map((todo) => (
-          <TodoDetails key={todo._id} todo={todo}/>
-        ))}
+    <div className="border container-fluid">
+      <div className='row'>
+        <div className="col">
+          <h3 className='text-center mt-3'>Current Tasks</h3>
+          {todos && todos.map((todo) => (
+            <TodoDetails key={todo._id} todo={todo}/>
+          ))}
+        </div>
+        <div className="col-lg-6">
+           <TodoForm/>
+        </div>   
       </div>
     </div>
   )

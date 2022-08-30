@@ -1,4 +1,4 @@
-import { Container, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavbarComp from './components/Navbar';
 import Home from './components/Home';
